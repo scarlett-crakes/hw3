@@ -4,6 +4,8 @@
 #define NULL 0
 #endif
 
+#include <iostream>
+using namespace std;
 /**
  * Node struct for both problems
  */
@@ -14,6 +16,13 @@ struct Node
 
     Node(int v, Node* n) : val(v), next(n) {}
 };
+
+/*struct IsOdd
+{
+    bool operator()(int num) {
+        return (num % 2) != 0;
+    }
+};*/
 
 
 /**
@@ -83,8 +92,25 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
-
-
+    //cout << "hello";
+    if(head == NULL)
+    {
+      //cout << "world!" << endl;
+      return head;
+    }
+    else if(pred(head->val))
+    {
+      //cout << "hello! " << head->val << endl;
+      Node* temp = head;
+      head = temp->next;
+      delete temp; //deallocating item that should be removed
+      return llfilter(head, pred);
+    }
+    else
+    {
+      //cout << "hi! " << head->val << endl;
+      head->next = llfilter(head->next, pred);
+    }
 }
 
 #endif
